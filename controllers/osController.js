@@ -1,7 +1,7 @@
 const os = require("os")
 module.exports.Name = async (req,res) => {
     try {
-        //
+        //logique
         res.status(200).json("");
     } catch (error) {
         res.status(500).json({ message: error.message });

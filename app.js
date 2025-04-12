@@ -11,7 +11,7 @@ const { connectToMongoDb } = require("./db/db");
 
 var indexRouter = require("./routes/index");
 var osRouter = require("./routes/osRouter");
-var usersRouter = require("./routes/users");
+var usersRouter = require("./routes/usersRouter");
 
 var app = express();
 
@@ -38,7 +38,7 @@ app.use(function (err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  res.render("error");
+  res.json("error");
 });
 
 const server = http.createServer(app);
