@@ -5,6 +5,7 @@ var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 
 const http = require("http");
+
 require("dotenv").config();
 
 const { connectToMongoDb } = require("./db/db");
@@ -12,6 +13,7 @@ const { connectToMongoDb } = require("./db/db");
 var indexRouter = require("./routes/index");
 var osRouter = require("./routes/osRouter");
 var usersRouter = require("./routes/usersRouter");
+var carRouter = require("./routes/carRouter");
 
 var app = express();
 
@@ -24,6 +26,7 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use("/index", indexRouter);
 app.use("/os", osRouter);
 app.use("/users", usersRouter);
+app.use("/cars", carRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
