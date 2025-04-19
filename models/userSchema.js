@@ -10,8 +10,12 @@ const userSchema = new mongoose.Schema({
   age: Number,
   user_image:String,
   //hetho teba3 x
-  isActive : Boolean
+  isActive : Boolean,
   //hetho teba3 Y
+
+  //one to 
+  car : {type : mongoose.Schema.Types.ObjectId, ref: 'Car',} //one 
+  //cars : [{type : mongoose.Schema.Types.ObjectId, ref: 'Car',}] //many 
 },{timestamps:true});
 
 userSchema.pre("save",async function(next){

@@ -1,4 +1,5 @@
 const CarModel = require("../models/carSchema")
+const UserModel = require("../models/userSchema")
 
 module.exports.getAllCars = async (req,res)=>{
     try {
@@ -44,6 +45,8 @@ module.exports.deleteCar = async (req,res) => {
 
         await CarModel.findByIdAndDelete(id)
 
+        await UserModel.updateMany({},{$pull : {cars : car.id}})
+
         res.status(200).json("car deleted")
     } catch (error) {
        res.status(500).json({message:error.message}) 
@@ -79,11 +82,31 @@ module.exports.getCountCars = async (req,res)=>{
 
 module.exports.getAllCars = async (req,res)=>{
     try {
-        
+
         const listCars = await CarModel.find().sort({age:-1})
 
         res.status(200).json({listCars})
     } catch (error) {
         res.status(500).json({message: error.message})
+    }
+}
+
+module.exports.addCarWithOwner = async (req,res)=>{
+    try {
+        const {brand,color,matricul,owner}=req.body()
+
+        const addedCar = new CarModel({
+            brand,color,matricul,owner
+        })
+
+        addedCar.save()
+
+        await UserModel.findByIdAndUpdate(owner,{
+            $push:{cars :addedCar._id }
+        })
+
+        res.status(200).json(addedCar)
+    } catch (error) {
+        res.status(500).json({message:error.message})
     }
 }
