@@ -16,7 +16,7 @@ const userSchema = new mongoose.Schema(
     connecte: Boolean,
     //one to
     //car : {type : mongoose.Schema.Types.ObjectId, ref: 'Car',}, //one
-    //  employer: {type : mongoose.Schema.Types.ObjectId, ref: 'User',} //many
+    //  employer: [{type : mongoose.Schema.Types.ObjectId, ref: 'User',}] //many
 
     cars: [{ type: mongoose.Schema.Types.ObjectId, ref: "Car" }], //many
   },
