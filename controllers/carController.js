@@ -3,7 +3,7 @@ const UserModel = require("../models/userSchema")
 
 module.exports.getAllCars = async (req,res)=>{
     try {
-        const listCars = await CarModel.find()
+        const listCars = await CarModel.find().populate("owner")
 
         res.status(200).json({listCars})
     } catch (error) {
@@ -25,7 +25,7 @@ module.exports.getCarById = async (req,res)=>{
 
 module.exports.addCar = async (req,res)=>{
     try {
-        const {brand,color,matricul}=req.body()
+        const {brand,color,matricul}=req.body
 
         const addedCar = new CarModel({
             brand,color,matricul
@@ -80,7 +80,7 @@ module.exports.getCountCars = async (req,res)=>{
     }
 }
 
-module.exports.getAllCars = async (req,res)=>{
+module.exports.getAllCarsSort = async (req,res)=>{
     try {
 
         const listCars = await CarModel.find().sort({age:-1})
@@ -93,7 +93,7 @@ module.exports.getAllCars = async (req,res)=>{
 
 module.exports.addCarWithOwner = async (req,res)=>{
     try {
-        const {brand,color,matricul,owner}=req.body()
+        const {brand,color,matricul,owner}=req.body
 
         const addedCar = new CarModel({
             brand,color,matricul,owner

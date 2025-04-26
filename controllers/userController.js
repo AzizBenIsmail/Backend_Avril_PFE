@@ -63,7 +63,7 @@ module.exports.deletUserById = async (req,res)=>{
 module.exports.getUserById = async (req,res)=>{
     try {
         const {id}=req.params
-        const user = await userModel.findById(id)
+        const user = await userModel.findById(id).populate("cars").populate("hotels")
 
         res.status(200).json(user)
     } catch (error) {
@@ -124,3 +124,34 @@ module.exports.addUserWithImage = async (req, res) => {
       res.status(500).json({ message: error.message });
     }
   };
+
+  module.exports.login = async (req,res)=>{
+    try {
+        const { email , password} = req.body
+        
+        const user = await userModel.login(email,password)
+        const connecte = true
+        await userModel.findByIdAndUpdate(user._id,{
+            $set: {connecte}
+        })
+        
+        res.status(200).json({message :"connected",user : user})
+    } catch (error) {
+        res.status(500).json({message:error.message} )
+    }
+  }
+
+  module.exports.logout = async (req,res)=>{
+    try {
+        const {id} = req.params
+        
+        const connecte = false
+        await userModel.findByIdAndUpdate(user._id,{
+            $set: {connecte}
+        })
+        
+        res.status(200).json("User successfully logged out")
+    } catch (error) {
+        res.status(500).json({message:error.message} )
+    }
+  }

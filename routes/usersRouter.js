@@ -6,6 +6,7 @@ const uploadfile = require('../middlewares/uploadFile');
 /* GET users listing. */
 router.get('/getAllUsers',userController.getAllUsers );
 router.get('/getUserById/:id',userController.getUserById );
+router.post('/login',userController.login );
 router.post('/addClient',userController.addClient );
 router.post('/addAdmin',userController.addAdmin );
 router.post('/addUserWithImage',uploadfile.single("image_user"),userController.addUserWithImage );
